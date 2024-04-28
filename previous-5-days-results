@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Previous 5 days Results</title>
+<style>
+  /* Flexbox container for header */
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Adjust as needed */
+  }
+
+  /* Left align the title */
+  .header-title {
+    margin: 0; /* Remove default margin */
+  }
+
+  /* Right align the dropdown */
+  .dropdown-container {
+    text-align: right;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
+
+</head>
+<body>
+<div class="header-container">
+  <h2 class="header-title">Previous 5 days Results</h2>
+  <div class="dropdown-container">
+    <label for="numberDropdown">Select:</label>
+    <select id="numberDropdown">
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option>
+      <option value="19">19</option>
+      <option value="30">30</option>
+      <option value="31">31</option>
+      <option value="32">32</option>
+      <option value="33">33</option>
+      <option value="34">34</option>
+      <option value="35">35</option>
+      <option value="36">36</option>
+      <option value="37">37</option>
+      <option value="38">38</option>
+      <option value="39">39</option>
+      <option value="50">50</option>
+      <option value="51">51</option>
+      <option value="52">52</option>
+      <option value="53">53</option>
+      <option value="54">54</option>
+      <option value="55">55</option>
+      <option value="56">56</option>
+      <option value="57">57</option>
+      <option value="58">58</option>
+      <option value="59">59</option>
+    </select>
+  </div>
+</div>
+
+<table id="resultsTable">
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>28/04/24</th>
+      <th>27/04/24</th>
+      <th>26/04/24</th>
+      <th>25/04/24</th>
+      <th>24/04/24</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Table body will be populated dynamically -->
+  </tbody>
+</table>
+
+<script>
+  function generateRandomNumber() {
+    return Math.floor(Math.random() * 100).toString().padStart(2, '0');
+  }
+
+  function populateTable() {
+    const number = document.getElementById('numberDropdown').value;
+    const tableBody = document.querySelector('#resultsTable tbody');
+    tableBody.innerHTML = '';
+
+    const times = [];
+    for (let hour = 8; hour <= 22; hour++) {
+      for (let minute = 0; minute < 60; minute += 15) {
+        const timeString = `${hour % 12 || 12}:${minute.toString().padStart(2, '0')} ${hour < 12 ? 'AM' : 'PM'}`;
+        times.push(timeString);
+      }
+    }
+
+    times.forEach(time => {
+      const row = document.createElement('tr');
+      const timeCell = document.createElement('td');
+      timeCell.textContent = time;
+      row.appendChild(timeCell);
+
+      for (let i = 0; i < 5; i++) {
+        const cell = document.createElement('td');
+        const randomNumber = generateRandomNumber();
+        cell.textContent = randomNumber;
+        row.appendChild(cell);
+      }
+
+      tableBody.appendChild(row);
+    });
+  }
+
+  // Populate table initially
+  populateTable();
+
+  // Add event listener to dropdown to repopulate table on change
+  document.getElementById('numberDropdown').addEventListener('change', populateTable);
+</script>
+</body>
+</html>
